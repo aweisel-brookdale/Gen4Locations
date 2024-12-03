@@ -1,0 +1,45 @@
+body {
+    background-image: url("../images/natdexbg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.header {
+    background-color: #b72025;
+    padding: 20px;
+    margin: auto;
+}
+
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFFFFF;
+    margin: auto;
+    text-align: center;
+}
+
+.menu-items {
+    font-family: Arial, Helvetica, sans-serif;
+    color: blue;
+    margin: auto;
+    text-align: center;
+}
+
+.page-content {
+    float: left;
+    width: 50%;
+    font-size: 35px;
+    background-color: white;
+    color: #205a94;
+    margin-left: 25%;
+    margin-top: 2em;
+}
+
+.content{
+    margin: auto;
+    /* margin-left: 10em; */
+}
+
+.contentIntro {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
