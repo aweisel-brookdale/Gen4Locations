@@ -35,7 +35,6 @@ $('#data-submit').click(function() {
 
  });
 
-});
 
 $('#data-clear').click(function() {
     $('#dexNumber').val("");

@@ -4,8 +4,9 @@
     "\\client",
     "\\client\\css",
     "\\client\\js",
-    "\\server"
+    "\\server",
+    "\\server\\files"
   ],
-  "SelectedNode": "\\client\\natdex.html",
+  "SelectedNode": "\\server\\router.js",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,1 @@
+[{"id":"lib1733426294832","dexNumber":"1","name":"Bulbasaur","type":"Grass/Poison","availability":"HeartGold/SoulSilver","obtain":"Gift from Professor Oak"}]
