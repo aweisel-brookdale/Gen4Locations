@@ -1,0 +1,139 @@
+body {
+    background-image: url("../images/browsedatabg.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+.header {
+    background-color: #b72025;
+    padding: 20px;
+}
+
+.title {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #FFFFFF;
+    margin: auto;
+    text-align: center;
+}
+
+.menu-items {
+    font-family: Arial, Helvetica, sans-serif;
+    color: blue;
+    margin: auto;
+    text-align: center;
+}
+
+.page-content {
+    width: 100%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+#dexTableContainer {
+    font-size: 20px;
+    width: 95%;
+    margin: auto;
+    margin-left: 0em;
+    margin-top: 5em;
+    background-color: silver; 
+}
+
+th, td {
+    text-align:center;
+    font-size: 24px;
+    margin: auto;
+}
+
+
+/* Table */
+.table-responsive > .table > thead > tr > th,
+.table-responsive > .table > thead > tr > td,
+.table-responsive > .table > tbody > tr > th,
+.table-responsive > .table > tbody > tr > td,
+.table-responsive > .table > tfoot > tr > th,
+.table-responsive > .table > tfoot > tr > td {
+    white-space: normal;
+}
+
+table > tr > td {
+    color: #333333;
+}
+
+.table-headerRow {
+    background-color: #205a94;
+    color: white;
+}
+
+.table-headerRow th {
+    font-size: 1.3em;
+}
+
+
+
+.btn-sm{
+    font-size: 12px;
+    padding: 8px 10px;
+    background-color: #333333;
+    color: #FFF;
+}
+
+
+
+
+@media screen and (max-width: 1365px) {
+    .page-content {
+        width: 100%;
+    }
+    
+    .container {
+        width: 100%;        
+    }
+    
+    .table-responsive{
+        font-size: 10px;
+        width: 100%;
+    }
+
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+      padding: 10px 2px;
+    }
+
+    .table > thead > tr > th,
+    .table > tbody > tr > th,
+    .table > tfoot > tr > th {
+      padding: 12px 4px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .page-content {
+        width: 100%;
+    }
+    
+    .container {
+        width: 100%;        
+    }
+    
+    .col-xs-11{
+        width: 100%;        
+    }
+    
+    .table-responsive{
+        font-size: 10px;
+        width: 100%;
+    }
+
+    .table > thead > tr > td,
+    .table > tbody > tr > td,
+    .table > tfoot > tr > td {
+      padding: 10px 2px;
+    }
+
+    .table > thead > tr > th,
+    .table > tbody > tr > th,
+    .table > tfoot > tr > th {
+      padding: 12px 4px;
+    }
+}

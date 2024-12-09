@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Pok&eacute;dex Table</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="client/js/config.js"></script>
+    <script src="client/js/dexTable.js"></script>
+    <style>
+      table, th, td {
+        border: 1px solid black;
+      }
+    </style>  
+  </head>
+  <body data-ng-app="tableApp" data-ng-controller="tableCtrl" data-ng-init="hideForm=true">
+      <section data-ng-hide="hideTable">
+          <div style="margin-left: 70px;">
+              <label for="groupby">Pok&eacute;dex Number:</label>
+              <select id="groupby"
+                 data-ng-model="selectedType"
+                 data-ng-options="type.display for type in types"
+                 data-ng-change="redrawTable()">
+              </select>
+          </div>
+
+          <div style="margin: 30px">
+              <table>
+                  <tr>
+                      <th>Pok&eacute;dex Number</th>
+                      <th>Pok&eacute;mon Name</th>
+                      <th>Type</th>
+                      <th>Game(s) Available</th>
+                      <th>How to Obtain</th>
+                  </tr>
+
+                  <tr data-ng-repeat="obj in dex">
+                      <td>{{ obj.dexNumber }}</td>
+                      <td>{{ obj.name }}</td>
+                      <td>{{ obj.type }}</td>
+                      <td>{{ obj.availability }}</td>
+                      <td>{{ obj.obtain }}</td>
+                      <td>
+                          <button data-ng-click="editMon($index)">Edit</button>
+                      </td>
+                      <td>
+                          <button data-ng-click="deleteMon(obj.dexNumber)">DELETE</button>
+                      </td>
+                  </tr>
+              </table>
+          </div>
+      </section>
+
+      <section data-ng-hide="hideForm">
+          <div style="font-size: 30px">
+              <label data-ng-model="id" hidden></label>
+              <div>
+                  <label for="name">Pok&eacute;dex Number:</label>
+                  <input type="text" id="dexNumber" data-ng-model="dexNumber">
+              </div>
+
+              <div>
+                  <label for="type">Pok&eacute;mon Name:</label>
+                  <input type="text" id="name" data-ng-model="name">
+              </div>
+
+              <div>
+                  <label for="type">Type:</label>
+                  <input type="text" id="type" data-ng-model="type">
+              </div>
+
+              <div>
+                  <label for="availability">Game(s) Available:</label>
+                  <input type="text" id="availability" data-ng-model="availability">
+              </div>
+
+              <div>
+                  <label for="obtain">How to Obtain:</label>
+                  <input type="text" id="obtain" data-ng-model="obtain">
+              </div>
+
+              <div style="float: left; margin-top: 30px">
+                  <div style="float:left; clear:right; margin-left: 30px">
+                      <button id="submit" data-ng-click="updateMon()">Update</button>
+                  </div>
+              </div>
+
+              <div style="float: left; margin-top: 30px">
+                  <div style="float:left; clear:right; margin-left: 30px">
+                      <button id="cancelButton" data-ng-click="cancelUpdate()">Cancel</button>
+                  </div>
+              </div>
+
+              <div style="float: left; clear: left; margin-top: 20px; font-size: 24px; color: green;">{{addResults}}</div>
+
+          </div>
+
+      </section>
+    
+  </body>
+</html>

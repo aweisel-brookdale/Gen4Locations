@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        Browse Pok&eacute;dex
+    </title>
+
+    <link rel="stylesheet" type="text/css" href="/client/css/browse-data.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="/client/js/config.js"></script>
+    <script src='/client/js/browse-data.js'></script>
+</head>
+
+<body data-ng-app="browseDataApp" data-ng-controller="browseDataCtrl">
+
+    <header class="header">
+        <section class="relative text-center">
+            <div class="container">
+                <div class="text-center">
+                    <h1 class='title'><span class='text-bold'>Aaron's National Pok&eacute;dex</span></h1>
+                </div>
+            </div>
+        </section>
+    </header>
+
+    <div id="menu-items" class="menu-items text-center">
+        <div class='router-link-container'>
+            <a class='router-link' href='/'>HOME</a>
+        </div>
+        <div class='router-link-container'>
+            <a class='router-link' href='/write-data'>ENTER POK&Eacute;MON</a>
+        </div>
+        <div class='router-link-container'>
+            <a class='router-link' href='/view-data'>VIEW POK&Eacute;DEX</a>
+        </div>
+        <div class='router-link-container'>
+            <a class='router-link' href='/browse-data'>BROWSE POK&Eacute;DEX</a>
+        </div>
+    </div>
+
+    <div style="font-size: 30px">
+        <div>
+            <label for="dexNumber">Pok&eacute;dex Number:</label>
+            <label style="margin-left: 30px; color:blue" id="dexNumber">{{ obj.dexNumber }}</label>
+        </div>
+
+        <div>
+            <label for="name">Pok&eacute;mon Name:</label>
+            <label style="margin-left: 30px; color:blue" id="name">{{ obj.name }}</label>
+        </div>
+
+        <div>
+            <label for="type">Type:</label>
+            <label style="margin-left: 30px; color:blue" id="type">{{ obj.type }}</label>
+        </div>
+
+        <div>
+            <label for="availability">Game(s) Available:</label>
+            <label style="margin-left: 30px; color:blue" id="availability">{{ obj.availability }}</label>
+        </div>
+
+        <div>
+            <label for="obtain">How to Obtain:</label>
+            <label style="margin-left: 30px; color:blue" id="obtain">{{ obj.obtain }}</label>
+        </div>
+
+        <div style="float: left; margin-top: 30px">
+            <div style="float: left">
+                <button id="previous" data-ng-click="changeMon(-1)" data-ng-hide="hidePrev">&lt&lt&lt Previous</button>
+            </div>
+
+            <div style="float: left">
+                <button id="next" data-ng-click="changeMon(1)" data-ng-hide="hideNext">Next &gt&gt&gt</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
