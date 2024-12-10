@@ -14,7 +14,7 @@ app.controller('browseDataCtrl', function ($scope, $http) {
             //Successfully connected to the server
             console.log("This is Fred" + JSON.stringify(fred));
             if (fred.data.msg === "SUCCESS") {
-                mons = fred.data.fileData;
+                mons = fred.data.mons;
                 $scope.obj = mons[activeMon];
                 $scope.showHide();
             } else {

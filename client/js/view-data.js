@@ -12,7 +12,7 @@ function retrieveData() {
             console.log(response);
             var data = JSON.parse(response);
             if (data.msg == "SUCCESS") {
-                createDexTable(data.fileData);
+                createDexTable(data.mons);
             } else {
                 console.log(data.msg)
             }

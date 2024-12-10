@@ -3,6 +3,8 @@ const path = require('path');
 const bodyParser = require('body-parser');
 
 const app = express();
+var cors = require('cors');
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,8 +21,9 @@ services(app);
 var port = 5000;
 
 //Listen
-var server = app.listen(port, function(err) {
-    if (err) throw err;
-
+var server = app.listen(port, function (err) {
+    if (err) {
+        throw err;
+    }
     console.log("Listening on port: " + port);
-})
+});
