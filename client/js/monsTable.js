@@ -10,7 +10,7 @@ app.controller("tableCtrl", function ($scope, $http) {
         }).then(function (response) {
             if (response.data.msg === "SUCCESS") {
                 $scope.mons = response.data.mons;
-                $scope.names = getTypes(response.data.mons);
+                $scope.names = getNames(response.data.mons);
                 $scope.selectedName = $scope.names[0];
             } else {
                 console.log(response.data.msg);
@@ -23,7 +23,7 @@ app.controller("tableCtrl", function ($scope, $http) {
     $scope.get_records();
 
     $scope.redrawTable = function() {
-        var type = $scope.selectedName.value;
+        var name = $scope.selectedName.value;
 
         $http({
             method: 'get',

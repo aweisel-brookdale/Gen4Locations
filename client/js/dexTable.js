@@ -10,8 +10,8 @@ app.controller("tableCtrl", function ($scope, $http) {
         }).then(function (response) {
             if (response.data.msg === "SUCCESS") {
                 $scope.mons = response.data.mons;
-                $scope.names = getTypes(response.data.mons);
-                $scope.selectedName = $scope.names[0];
+                $scope.types = getTypes(response.data.mons);
+                $scope.selectedType = $scope.types[0];
             } else {
                 console.log(response.data.msg);
             }
@@ -23,12 +23,12 @@ app.controller("tableCtrl", function ($scope, $http) {
     $scope.get_records();
 
     $scope.redrawTable = function() {
-        var type = $scope.selectedName.value;
+        var type = $scope.selectedType.value;
 
         $http({
             method: 'get',
-            url: dexURL + "/get-monsByName",
-            params: {name: name}
+            url: dexURL + "/get-monsByType",
+            params: {type: type}
         }).then(function (response) {
             if (response.data.msg === "SUCCESS") {
                 $scope.mons = response.data.mons;
@@ -46,8 +46,8 @@ app.controller("tableCtrl", function ($scope, $http) {
         $scope.name = $scope.mons[monNumber].name;
         $scope.type = $scope.mons[monNumber].type;
         $scope.availability = $scope.mons[monNumber].availability;
-        $scope.obtain = $scope.mons[monNumber].obtain
-        $scope.id = $scope.mons[monNumber].id;
+        $scope.obtain = $scope.mons[monNumber].obtain;
+        $scope.monID = $scope.mons[monNumber]['_id'];
 
         $scope.hideTable = true;
         $scope.hideForm = false;
@@ -64,14 +64,14 @@ app.controller("tableCtrl", function ($scope, $http) {
             return;
         }
         var jsonData = {
-            id: $scope.id,
+            ID: $scope.monID,
             dexNumber: $scope.dexNumber,
-            name: $scope.name.toLowerCase(),
+            name: $scope.name,
             type: $scope.type,
             availability: $scope.availability,
             obtain: $scope.obtain
         };
-
+        
         console.log(jsonData)
         $http({
             method: 'put',
@@ -81,7 +81,7 @@ app.controller("tableCtrl", function ($scope, $http) {
             if (response.data.msg === "SUCCESS") {
                 $scope.cancelUpdate();
                 $scope.redrawTable();
-
+                console.log("In update response");
                 $scope.dexNumber = "";
                 $scope.name = "";
                 $scope.type = "";
@@ -95,13 +95,13 @@ app.controller("tableCtrl", function ($scope, $http) {
         }
     }
 
-    $scope.deleteMon = function(dexNumber) {
-        console.log(dexNumber);
+    $scope.deleteMon = function(id) {
+        console.log(id);
 
         $http({
             method: 'delete',
             url: dexURL + "/delete-record",
-            params: {name: dexNumber}
+            params: {monID: id}
         }).then(function (response) {
             if (response.data.msg === "SUCCESS") {
                 $scope.redrawTable();
@@ -115,22 +115,22 @@ app.controller("tableCtrl", function ($scope, $http) {
 
 }); //End of controler
 
-function getNames(dexTableData) {
-    var nameExists;
+function getTypes(dexTableData) {
+    var typeExists;
 
-    namesArray = [{ value: "", display: "ALL" }];
+    typesArray = [{ value: "", display: "ALL" }];
 
     for (var i = 0; i < dexTableData.length; i++) {
-        nameExists = namesArray.find(function(element) {
-            return element.value === dexTableData[i].name;
+        typeExists = typesArray.find(function(element) {
+            return element.value === dexTableData[i].type;
         });
 
-        if (nameExists) {
+        if (typeExists) {
             continue;
         } else {
-            namesArray.push({ value: dexTableData[i].name, display: dexTableData[i].name.toUpperCase() });
+            typesArray.push({ value: dexTableData[i].type, display: dexTableData[i].type.toUpperCase() });
         }
     }
 
-    return namesArray;
+    return typesArray;
 }

@@ -1,9 +1,9 @@
-const fs = require('fs');
-const path = require('path');
+//const fs = require('fs');
+//const path = require('path');
 
-const DB_FILE = path.join(__dirname + '/files/data.txt');
+//const DB_FILE = path.join(__dirname + '/files/data.txt');
 
-const { MongoClient, ObjectID } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 
 //Define Database URL
 const dbURL = process.env.DB_URI || "mongodb://127.0.0.1";
@@ -12,8 +12,8 @@ const dbURL = process.env.DB_URI || "mongodb://127.0.0.1";
 const dbClient = new MongoClient(dbURL);
 
 var services = function (app) {
-    app.post('/write-record', async function (req, res) {
 
+    app.post('/write-record', async function (req, res) {
         var monData = {
             dexNumber: req.body.dexNumber,
             name: req.body.name,
@@ -22,8 +22,7 @@ var services = function (app) {
             obtain: req.body.obtain
         };
 
-        //var search = { dexNumber: req.body.dexNumber };
-        //var dexData = [];
+        var search = { dexNumber: req.body.dexNumber };
 
 
         try {
@@ -31,16 +30,16 @@ var services = function (app) {
             const db = conn.db("Gen4NatDex");
             const coll = db.collection("mons");
 
-            //const mon = await coll.find(search).toArray();
+            const mon = await coll.find(search).toArray();
 
-            /* if (mon.length > 0) {
+            if (mon.length > 0) {
                 await conn.close();
                 return res.send(JSON.stringify({ msg: "Pok&eacute;mon Already Exists" + error }));
-            } else { */
+            } else {
                 await coll.insertOne(monData);
                 await conn.close();
                 return res.send(JSON.stringify({ msg: "SUCCESS" }));
-            //}
+            }
 
         } catch (error) {
             console.log("Error" + error);
@@ -49,7 +48,7 @@ var services = function (app) {
 
     });
 
-    app.get("/get-records", async function (req, res) {
+    app.get('/get-records', async function (req, res) {
         try {
             const conn = await dbClient.connect();
             const db = conn.db("Gen4NatDex");
@@ -61,13 +60,13 @@ var services = function (app) {
 
             return res.send(JSON.stringify({ msg: "SUCCESS", mons: data }));
         } catch (error) {
-            await conn.close();
-            return res.send(JSON.stringify({ msg: "Error" + error }));
+            //await conn.close();
+            return res.send(JSON.stringify({ msg:"Error" + error }));
         }
     });
 
-    app.get("/get-monsByName", async function (req, res) {
-        var search = (req.query.name === "") ? {} : { type: req.query.name };
+    app.get("/get-monsByType", async function (req, res) {
+        var search = (req.query.type === "") ? {} : { type: req.query.type };
 
         try {
             const conn = await dbClient.connect();
@@ -79,38 +78,59 @@ var services = function (app) {
             await conn.close();
 
             return res.send(JSON.stringify({ msg: "SUCCESS", mons: data }));
-        } catch (error) {
-            await conn.close();
-            return res.send(JSON.stringify({ msg: "Error" + error }));
+        } catch(error) {
+            //await conn.close();
+            return res.send(JSON.stringify({ msg:"Error" + error }));
         }
 
     });
-    app.delete("/delete-record", function (req, res) {
+
+    app.put('/update-mon', async function (req, res) {
+        var updateData = {
+            $set: {
+                dexNumber: req.body.dexNumber,
+                name: req.body.name,
+                type: req.body.type,
+                availability: req.body.availability,
+                obtain: req.body.obtain
+            }
+        };
+
+        try {
+            const conn = await dbClient.connect();
+            const db = conn.db("Gen4NatDex");
+            const coll = db.collection("mons");
+            
+            const search = { _id: ObjectId.createFromHexString(req.body.ID) };
+            
+            await coll.updateOne(search, updateData);
+
+            await conn.close();
+
+            return res.send(JSON.stringify({ msg: "SUCCESS" }));
+        } catch (err) {
+            console.log(err);
+            return res.send(JSON.stringify({ msg: "Error " + err }));
+        }
+
+    });
+    app.delete("/delete-record", async function (req, res) {
         //console.log("Test")
-        var id = req.body.deleteID;
-        if (fs.existsSync(DB_FILE)) {
-            fs.readFile(DB_FILE, "utf8", function (err, data) {
-                if (err) {
-                    res.send(JSON.stringify({ msg: err }));
-                } else {
-                    var dexData = JSON.parse(data);
-                    for (var i = 0; i < dexData.length; i++) {
-                        if (dexData[i].id == id) {
-                            dexData.splice(i, 1);
-                            break;
-                        }
-                    }
-                    fs.writeFile(DB_FILE, JSON.stringify(dexData), function (err) {
-                        if (err) {
-                            res.send(JSON.stringify({ msg: err }));
-                        } else {
-                            res.send(JSON.stringify({ msg: "SUCCESS" }));
-                        }
-                    })
-                }
-            });
-        } else {
-            res.send(JSON.stringify({ msg: "File does not exist" }));
+        try {
+            const conn = await dbClient.connect();
+            const db = conn.db("Gen4NatDex");
+            const coll = db.collection("mons");
+
+            const search = {_id: ObjectId.createFromHexString(req.query.monID)};
+
+            await coll.deleteOne(search);
+
+            await conn.close();
+
+            return res.send(JSON.stringify({msg: "SUCCESS"}));
+        } catch (err) {
+            console.log(err);
+            return res.send(JSON.stringify({ msg: "Error" + err }));
         }
     });
 
